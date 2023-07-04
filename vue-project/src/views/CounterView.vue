@@ -1,6 +1,18 @@
 <template>
-    <button class="btn btn-primary w-36 h-20">New counter</button>
-    <div class="card text-center" style="width: 18rem;"> 
+    <div class="card text-center mx-4" style="width: 18rem;">
+        <div class="card-body">
+            <p class="card-text">New counter</p>
+            <div class="input-group mb-3">
+                <form>
+                    <input type="text" class="form-control" placeholder="Counter name" aria-label="Counter name"
+                        aria-describedby="button-addon2" v-model="new_counter_name">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="createNewCounter(new_counter_name)">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card text-center" style="width: 18rem;">
         <div class="card-body">
             <h4 class="card-title">
                 <span class="badge rounded-pill bg-primary">{{ counter }}</span>
@@ -31,14 +43,23 @@ export default defineComponent({
         oneLess() {
             this.counter -= 1
             console.log("¡Se resta 1!", this.counter)
+        },
+        createNewCounter(counter_name: string) {
+            console.log("Counter name", this.new_counter_name)
+            console.log("Entra en función")
+            console.log("Nuevo contador", counter_name)
+            /* const new_counter = new this.Counter(0, counter_name) */
         }
     },
     setup() {
+
+        const new_counter_name: Ref<string | undefined> = ref()
+
         class Counter {
             amount: number
             counter_name: string
 
-            constructor(amount: number) {
+            constructor(amount: number, counter_name: string) {
                 this.amount = amount
                 this.counter_name = this.counter_name
             }
@@ -56,7 +77,9 @@ export default defineComponent({
         const counter: Ref<Number> = ref(0)
 
         return {
-            counter
+            counter,
+            Counter,
+            new_counter_name
         }
     }
 });
